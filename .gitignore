@@ -1,2 +1,4 @@
 *.log
 cifar-10-batches-py/
+part2.py
+plot_part1.py
