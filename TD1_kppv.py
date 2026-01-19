@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
+Editor Spyder
 
 Este é um arquivo de script temporário.
 """
 import matplotlib.pyplot as plt
-
 from skimage.feature import hog
 import numpy as np
 import random
@@ -19,16 +18,16 @@ def unpickle(file):
     return dict
 
 
-def lecture_cifar(path,batch):
+def lecture_cifar(path, batch):
 # ##################################    
-# lecture_cifar import the images from database CIFAR 10 
-# Arguments:
-# path -- path that leads to databate directory
-# batch -- The database contains 50k images divided into 5 minibatches, this argument
-# is a scalar and tells how many minibatches will be imported. 
-## Returns: 
-#  X -- A matrix size (N,M) where N is the number of images and M the size of the flattened image
-# Y -- A 1D vector size (N,1) that contains the correct classification for each image
+# lecture_cifar importa as imagens da base de dados CIFAR 10 
+# Argumentos:
+# path -- caminho que leva ao diretório da base de dados
+# batch -- A base de dados contém 50 mil imagens divididas em 5 minibatches (lotes),
+# este argumento é um escalar e define quantos minibatches serão importados. 
+## Retorna: 
+# X -- Uma matriz de tamanho (N, M) onde N é o número de imagens e M o tamanho da imagem vetorizada
+# Y -- Um vetor 1D de tamanho (N, 1) que contém a classificação correta para cada imagem
 # ##################################    
 
     X = np.empty((0,3072))
@@ -40,7 +39,7 @@ def lecture_cifar(path,batch):
         dictionary = unpickle(file)
         X = dictionary[b'data']
         Y = np.asarray(dictionary[b'labels'])
-           
+            
     else:
             for i in range(1,batch+1):
                  file = path + "\\data_batch_" + str(i)        
@@ -53,20 +52,20 @@ def lecture_cifar(path,batch):
     X = np.float32(X)   
     return X, Y
     
-## decoupage_donnees prenant en argument les matrices X et Y, et renvoyant les
-## données d'apprentissage et de test : Xapp, Yapp, Xtest, Ytest.
+## divisao_dados recebe como argumento as matrizes X e Y, e retorna os
+## dados de treinamento e teste: Xapp, Yapp, Xtest, Ytest.
 
 
-def decoupage_donnees(X,Y):
+def divisao_dados(X,Y):
 # ##################################
-# decoupage_donnees takes the outputs from lecture_cifar and divides the data 
-# into 80% apprentisage set and 20% test set.
-## Arguments:
-# X -- A matrix size (N,M) where N is the number of images and M the size of the flattened image
-# Y -- A 1D vector size (N,1) that contains the correct classification for each image 
-## Returns: 
-#  Xapp,Xtest -- HAve the same shape as the X input
-# Yapp, Ytest -- Have the same shape as the Y input
+# divisao_dados recebe as saídas de lecture_cifar e divide os dados 
+# em 80% para o conjunto de treinamento e 20% para o conjunto de teste.
+## Argumentos:
+# X -- Uma matriz de tamanho (N, M) onde N é o número de imagens e M o tamanho da imagem vetorizada
+# Y -- Um vetor 1D de tamanho (N, 1) que contém a classificação correta para cada imagem 
+## Retorna: 
+# Xapp, Xtest -- Possuem a mesma estrutura da entrada X
+# Yapp, Ytest -- Possuem a mesma estrutura da entrada Y
 # ##################################
     
     training_indice = random.sample(range(len(X)),k=round(0.8*len(X)))
@@ -86,15 +85,15 @@ def decoupage_donnees(X,Y):
 
 def Nfold_data(X,Y,N):
 # ##################################    
-# Nfold_data divides the data into N folds
-# Arguments : 
-# X -- A matrix size (N,M) where N is the number of images and M the size of the flattened image
-# Y -- A 1D vector size (N,1) that contains the correct classification for each image 
-## Returns: 
-# Xapp,Xtest -- A matrix size (x,x,N) where first two dimensions are used to store all data for the 
-# respective fold indicated by the third dimension.
-# Yapp,Ytest -- A matrix size (1,x,N) where first two dimensions are used to store the classification of data
-# for respective fold indicated by the third dimension.
+# Nfold_data divide os dados em N dobras (folds)
+# Argumentos : 
+# X -- Uma matriz de tamanho (N_img, M) onde N_img é o número de imagens e M o tamanho da imagem vetorizada
+# Y -- Um vetor 1D de tamanho (N_img, 1) que contém a classificação correta para cada imagem 
+## Retorna: 
+# Xapp, Xtest -- Uma matriz de tamanho (N, x, x) onde as duas primeiras dimensões são usadas para
+# armazenar todos os dados da respectiva dobra indicada pela terceira dimensão.
+# Yapp, Ytest -- Uma matriz de tamanho (N, 1, x) onde as duas primeiras dimensões são usadas para
+# armazenar a classificação dos dados para a respectiva dobra indicada pela terceira dimensão.
 # ##################################
  
     
@@ -126,11 +125,11 @@ def Nfold_data(X,Y,N):
 
 def unflatten_image(img_flat):
 # ##################################
-# unflatten_image reconsctruct the image obtained in the CIFAR database.
-# Arguments:
-# img_flat -- Vector size (1,3072), a flattened RGB image obtained in the CIFAR database
-# Return:
-# img -- An image size (32,32,3) pixels in RGB.
+# unflatten_image reconstrói a imagem obtida da base de dados CIFAR.
+# Argumentos:
+# img_flat -- Vetor de tamanho (1, 3072), uma imagem RGB vetorizada da base CIFAR
+# Retorna:
+# img -- Uma imagem de tamanho (32, 32, 3) pixels em RGB.
 # ##################################
     img_R = img_flat[0:1024].reshape((32, 32))
     img_G = img_flat[1024:2048].reshape((32, 32))
@@ -140,11 +139,11 @@ def unflatten_image(img_flat):
 
 def hog_image(X):
 # ##################################
-# hog_image function performs a histogram of oriented gradients of the imported images by lecture_cifar.
-# Arguments:
-# X -- A matrix (m,3072) containing m images that will be transformed by HOG process.
-# Return:
-# Xhog -- A matrix (m,1024) containing m images transformed by the HOG process.
+# hog_image realiza o cálculo do Histograma de Gradientes Orientados (HOG) das imagens importadas.
+# Argumentos:
+# X -- Uma matriz (m, 3072) contendo m imagens que serão transformadas pelo processo HOG.
+# Retorna:
+# Xhog -- Uma matriz (m, 1024) contendo m imagens transformadas pelo processo HOG.
 # ##################################    
     m = X.shape[0]    
     Xhog = np.empty((32,32,m),dtype='float32')
@@ -163,16 +162,17 @@ def hog_image(X):
 class KPPV:
     
     def __init__(self):
-        self.Acc = [] # Accuracy list
+        self.Acc = [] # Lista de acurácia (Accuracy)
         
     def distances(self,Xtest,Xapp):
     
-        ## kppv_distances prenant en argument Xtest et Xapp et
-        ## renvoyant la matrice des distances Dist
+        ## kppv_distances recebe como argumento Xtest e Xapp e
+        ## retorna a matriz de distâncias Dist
             
         Xapp_squared = np.square(Xapp)
         Xtest_squared = np.square(Xtest)
         
+        # Cálculo otimizado da distância Euclidiana: (A-B)^2 = A^2 - 2AB + B^2
         threeSums = np.sum(Xtest_squared[:,np.newaxis,:], axis=2) - 2 * Xtest.dot(Xapp.T) + np.sum(Xapp_squared, axis=1)
         Dist = np.sqrt(threeSums)
         
@@ -182,7 +182,7 @@ class KPPV:
     
     def predict(self,Dist,Yapp,K):
         
-     ## kppv_predict prenant en argument Dist, Yapp et K le nombre de voisins
+     ## kppv_predict recebe como argumento Dist, Yapp e K (número de vizinhos)
         
         Yapp = np.transpose(Yapp)
         index = np.argpartition(Dist,K,axis=-1)[:,0:K]
@@ -192,16 +192,17 @@ class KPPV:
         Ypred = np.zeros((num_rows,1))
         
         for i in range(num_rows):
+                # Atribui a classe mais frequente entre os vizinhos (votação majoritária)
                 Ypred[i] = np.argmax(np.bincount(Ytemp[i,:]))
     
         Ypred = Ypred.astype(int)
         Ypred = np.transpose(Ypred)
         return Ypred
     
-    ## evaluation_classifieur prenant en argument Ytest et Ypred et
-    ## renvoyant le taux de classification (Accuracy).
+    ## avaliacao_classificador recebe como argumento Ytest e Ypred e
+    ## retorna a taxa de acerto (Acurácia).
     
-    def evaluation_classifieur(self,Ytest,Ypred):
+    def avaliacao_classificador(self,Ytest,Ypred):
         
         Accuracy =  np.sum(Ypred == Ytest)/Ytest.size
         
@@ -211,12 +212,12 @@ class KPPV:
  
 if __name__ == '__main__':
 
-    ###################################################################
+    # ###################################################################
     
-    path = r"D:\Windows.old.000\Users\Caique_\Desktop\Master\M2\Deep Learning\TD1\cifar-10-batches-py"
+    path = r"C:\Users\caiqu\Desktop\Data Science\AI Classification Problem\cifar-10-batches-py"
     batch = 1
-    K = 3 # Number of neighboors 
-    N = 5 # Nfold
+    K = 3 # Número de vizinhos 
+    N = 5 # Número de dobras (Nfold)
     
     X,Y = lecture_cifar(path,batch)
        
@@ -233,6 +234,7 @@ if __name__ == '__main__':
     e = []
     
 
+    # Testando valores de K de 1 a 19 (apenas ímpares para evitar empates)
     for K in range(1,21,2):    
         for i in range(N):
             
@@ -240,27 +242,25 @@ if __name__ == '__main__':
             
             Ypred = kppv.predict(Dist,Yapp_fold[i],K)
             
-            Acc_Nfold[i] = kppv.evaluation_classifieur(Ytest_fold[i],Ypred)
+            Acc_Nfold[i] = kppv.avaliacao_classificador(Ytest_fold[i],Ypred)
             
         
         Acc.append(np.mean(Acc_Nfold))
         e.append(np.std(Acc_Nfold))
         
+    # Plotagem do gráfico de validação cruzada
     plt.errorbar(range(1,21,2),Acc,e,fmt='ko')
-    plt.title(str(N) + "-fold Cross Validation")
-    plt.ylabel('Accuracy')
-    plt.xlabel('K-neighbors')
+    plt.title("Validação Cruzada com " + str(N) + " dobras")
+    plt.ylabel('Acurácia')
+    plt.xlabel('K-vizinhos')
     plt.xticks(np.arange(1,21,2))
     plt.show()
     
     
-
-        
+    # Trecho alternativo para divisão simples 80/20
     # plt.plot(range(1,21,2),Acc,'ko')
-    # plt.ylabel('Accuracy')
-    # plt.xlabel('K-neighbors')
+    # plt.ylabel('Acurácia')
+    # plt.xlabel('K-vizinhos')
     # plt.xticks(np.arange(1,21,2))
-    # plt.title('80% Learn - 20% Test division')
+    # plt.title('Divisão 80% Treino - 20% Teste')
     # plt.show()
-    
-    
