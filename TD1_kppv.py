@@ -150,8 +150,8 @@ def hog_image(X):
     
     for i in range(m):
         image = unflatten_image(X[i,:])
-        image = np.uint(image)
-        _,Xhog[:,:,i] = hog(image,visualize=True, multichannel=True)
+        image = np.uint8(image)
+        _,Xhog[:,:,i] = hog(image,visualize=True,channel_axis=-1)
     
     
     Xhog = Xhog.flatten().reshape(len(Y), 1024) 
@@ -247,10 +247,11 @@ if __name__ == '__main__':
         
         Acc.append(np.mean(Acc_Nfold))
         e.append(np.std(Acc_Nfold))
-        
-    # Plotagem do gráfico de validação cruzada
+
+    
+    # Plotagem do gráfico de Cross Validation
     plt.errorbar(range(1,21,2),Acc,e,fmt='ko')
-    plt.title("Validação Cruzada com " + str(N) + " dobras")
+    plt.title(f"Cross Validation com {N} k-folds")
     plt.ylabel('Acurácia')
     plt.xlabel('K-vizinhos')
     plt.xticks(np.arange(1,21,2))
