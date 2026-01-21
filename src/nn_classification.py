@@ -391,7 +391,7 @@ def unflatten_image(img_flat):
 
 if __name__ == '__main__':
     
-    path = r"D:\Windows.old.000\Users\Caique_\Desktop\Master\M2\Deep Learning\TD1\cifar-10-batches-py"
+    path = r"C:\Users\caiqu\Desktop\Data Science\AI Classification Problem\cifar-10-batches-py"
     batch = 1
 
     X,Y = lecture_cifar(path,batch)
