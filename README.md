@@ -18,6 +18,7 @@ O objetivo principal é classificar imagens em 10 categorias diferentes (aviões
 -   **Extração de Características:** Implementação de descritores HOG para capturar formas e texturas.
 -   **KNN "From Scratch":** -   Cálculo de Distância Euclidiana otimizado via álgebra linear ($Dist(X, Y) = \sqrt{\sum X^2 - 2XY^T + \sum Y^2}$).
     -   Votação majoritária eficiente.
+-   Rede Neural "From Scratch": ** - Testes com diferentes funções de ativação (RELU6, sigmoid e softmax), implementação de métodos para combater o overfitting (Regularização L2)
 -   **Validação Cruzada (N-Fold):** Divisão de dados manual para busca de hiperparâmetros (K ideal).
 -   **Visualização:** Scripts para gerar gráficos de acurácia vs. hiperparâmetros e análise de desvio padrão.
 
