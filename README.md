@@ -56,7 +56,6 @@ O objetivo principal é classificar imagens em 10 categorias diferentes (aviões
 
 O projeto foca na análise do impacto do valor de **K** na acurácia do modelo. Através da extração HOG, conseguimos reduzir a dimensionalidade e mitigar a "maldição da dimensionalidade" inerente ao KNN em imagens.
 
-*(Dica: Adicione aqui uma imagem de um gráfico gerado pelo seu código, como a curva de acurácia!)*
 
 ## 📚 Tecnologias Utilizadas
 
