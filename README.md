@@ -11,7 +11,6 @@ Este projeto explora os fundamentos da **Visão Computacional** e **Aprendizado 
 O objetivo principal é classificar imagens em 10 categorias diferentes (aviões, carros, pássaros, etc.). Para isso, o projeto aborda duas frentes principais:
 1.  **KNN (K-Nearest Neighbors):** Implementado manualmente, utilizando otimização matricial com NumPy.
 2.  **Redes Neurais (NN):** Notebook dedicado à experimentação de arquiteturas neurais para classificação.
-3.  **HOG (Histogram of Oriented Gradients):** Técnica de extração de características para melhorar o desempenho dos modelos em relação aos pixels brutos.
 
 ## 🚀 Funcionalidades Técnicas
 
@@ -54,8 +53,15 @@ O objetivo principal é classificar imagens em 10 categorias diferentes (aviões
 
 ## 📊 Resultados
 
-O projeto foca na análise do impacto do valor de **K** na acurácia do modelo. Através da extração HOG, conseguimos reduzir a dimensionalidade e mitigar a "maldição da dimensionalidade" inerente ao KNN em imagens.
+O projeto foca na análise do desempenho de diferentes algoritmos de classificação. O modelo de Rede Neural (MLP) atingiu uma acurácia ligeiramente superior ao KNN nos dados de teste. Entretanto o modelo ainda sofre bastante com overfitting, sempre atingindo 100% de acuracia com os dados de apredizado.
 
+| Modelo | Acurácia (Teste) | Complexidade de Inferência |
+| :--- | :--- | :--- |
+| KNN (K=7) | ~29% | $O(N \cdot D)$ (Lento/Custoso) |
+| **ANN (MLP)** | **~38%+** | **$O(1)$ (Rápido/Paramétrico)** |
+
+**Próximo Projeto:**
+Para superar a barreira dos 38% e atingir níveis de performance de produção (>90%), o próximo passo lógico não é refinar este modelo, mas sim adotar **Transfer Learning**. Utilizaremos uma arquitetura **ResNet-18** (pré-treinada na ImageNet), aproveitando a extração de features robustas já aprendidas para focar apenas no *fine-tuning* para as classes do CIFAR-10.
 
 ## 📚 Tecnologias Utilizadas
 
